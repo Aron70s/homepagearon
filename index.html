@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4f0">
+  <meta name="description" content="이시형 건축설계 포트폴리오. 공간과 이용자, 대지의 조건을 함께 고려하는 건축설계 작업을 소개합니다.">
+  <title>이시형 — Architecture Portfolio</title>
+  <style>
+    :root {
+      --paper: #f5f4f0;
+      --paper-2: #eeede7;
+      --white: #fffefa;
+      --ink: #20241f;
+      --muted: #6c7069;
+      --line: #d9d9d0;
+      --accent: #b84e32;
+      --accent-dark: #833923;
+      --olive: #68745e;
+      --blue: #c6d2d1;
+      --max: 1200px;
+      --gutter: clamp(20px, 4vw, 56px);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      --shadow: 0 22px 70px rgba(35, 38, 32, .08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    body.menu-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    img, svg { display: block; max-width: 100%; }
+    ::selection { background: #d8b5a5; color: var(--ink); }
+    .skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--ink); color: white; padding: 10px 16px; }
+    .skip-link:focus { left: 12px; }
+    .shell { width: min(calc(100% - var(--gutter) * 2), var(--max)); margin-inline: auto; }
+    .eyebrow { margin: 0 0 14px; color: var(--accent); font-size: 11px; line-height: 1.3; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    .serif { font-family: var(--serif); font-weight: 400; letter-spacing: -.045em; }
+    .muted { color: var(--muted); }
+    .section { padding: clamp(68px, 9vw, 128px) 0; }
+    .section.compact { padding: 70px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 34px; }
+    .section-head h2 { max-width: 720px; margin: 0; font-size: clamp(30px, 4.3vw, 52px); line-height: 1.13; letter-spacing: -.055em; font-weight: 550; }
+    .section-head p { max-width: 340px; margin: 0; color: var(--muted); font-size: 14px; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 14px; min-height: 48px; padding: 12px 18px; border: 1px solid var(--ink); background: var(--ink); color: var(--white); font-size: 12px; font-weight: 750; letter-spacing: -.01em; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease; }
+    .btn:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+    .btn.secondary { color: var(--ink); background: transparent; }
+    .btn.secondary:hover { color: white; background: var(--ink); border-color: var(--ink); }
+    .btn.light { color: var(--ink); background: var(--white); border-color: var(--white); }
+    .btn.light:hover { background: var(--accent); color: white; border-color: var(--accent); }
+    .text-link { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 800; border-bottom: 1px solid currentColor; padding-bottom: 5px; transition: color .2s; }
+    .text-link:hover { color: var(--accent); }
+    .arrow { font-size: 17px; line-height: 1; }
+
+    /* Header / navigation */
+    .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(32,36,31,.12); background: rgba(245,244,240,.92); backdrop-filter: blur(16px); }
+    .header-inner { width: min(calc(100% - var(--gutter) * 2), 1320px); margin: auto; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .brand-mark { display: grid; place-items: center; width: 31px; height: 31px; border: 1px solid var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1; }
+    .brand-copy { display: flex; flex-direction: column; line-height: 1.15; }
+    .brand-copy strong { font-size: 13px; letter-spacing: .06em; }
+    .brand-copy small { margin-top: 4px; color: var(--muted); font-family: var(--serif); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+    .main-nav { display: flex; align-items: center; gap: clamp(18px, 2.6vw, 38px); }
+    .main-nav a { position: relative; padding: 8px 0; color: #555a52; font-size: 12px; font-weight: 750; }
+    .main-nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 2px; height: 1px; background: var(--accent); transition: right .2s ease; }
+    .main-nav a:hover, .main-nav a[aria-current="page"] { color: var(--ink); }
+    .main-nav a:hover::after, .main-nav a[aria-current="page"]::after { right: 0; }
+    .header-cta { min-height: 38px; padding: 9px 13px; font-size: 11px; white-space: nowrap; }
+    .menu-toggle { display: none; width: 42px; height: 42px; border: 1px solid var(--line); background: transparent; color: var(--ink); align-items: center; justify-content: center; }
+    .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after { display: block; width: 17px; height: 1.5px; background: currentColor; position: relative; transition: transform .2s; }
+    .menu-toggle span::before, .menu-toggle span::after { content: ""; position: absolute; left: 0; }
+    .menu-toggle span::before { top: -5px; }
+    .menu-toggle span::after { top: 5px; }
+    .menu-toggle[aria-expanded="true"] span { background: transparent; }
+    .menu-toggle[aria-expanded="true"] span::before { top: 0; transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span::after { top: 0; transform: rotate(-45deg); }
+
+    /* Hero */
+    .hero { padding: clamp(45px, 7vw, 86px) 0 58px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: minmax(300px, .84fr) minmax(0, 1.16fr); align-items: center; gap: clamp(28px, 5vw, 74px); }
+    .hero-copy { padding: 10px 0 22px; }
+    .hero-kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 23px; color: var(--muted); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    .hero-kicker::before { content: ""; display: block; width: 25px; height: 1px; background: var(--accent); }
+    .hero h1 { margin: 0; max-width: 610px; font-size: clamp(48px, 6.5vw, 86px); font-weight: 520; line-height: 1.02; letter-spacing: -.075em; }
+    .hero h1 span { display: block; color: var(--accent); font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -.065em; }
+    .hero-desc { max-width: 440px; margin: 25px 0 29px; color: #62665e; font-size: 15px; word-break: keep-all; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .hero-meta span { display: block; color: var(--muted); font-size: 10px; letter-spacing: .07em; }
+    .hero-meta strong { display: block; margin-top: 4px; font-size: 12px; font-weight: 750; }
+    .hero-art { position: relative; min-height: 485px; background: #d8ded8; overflow: hidden; isolation: isolate; }
+    .hero-art::before { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(135deg, #dce3dd 0%, #bdc9c4 45%, #7f918d 100%); }
+    .hero-art::after { content: ""; position: absolute; inset: 0; opacity: .27; background-image: linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px); background-size: 38px 38px; mask-image: linear-gradient(to bottom, black, transparent 90%); }
+    .hero-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .art-label { position: absolute; bottom: 19px; left: 20px; z-index: 2; display: flex; gap: 12px; align-items: center; color: #25312d; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+    .art-label::before { content: ""; width: 23px; height: 1px; background: var(--accent); }
+    .art-number { position: absolute; right: 20px; top: 17px; z-index: 2; color: rgba(32,36,31,.7); font-family: var(--serif); font-size: 14px; }
+
+    /* Projects */
+    .projects-section { background: var(--white); }
+    .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px; }
+    .project-card { min-width: 0; }
+    .project-image { position: relative; display: block; width: 100%; overflow: hidden; background: #e2e1db; aspect-ratio: 1.3 / 1; }
+    .project-image svg { width: 100%; height: 100%; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .project-card:hover .project-image svg { transform: scale(1.035); }
+    .project-tag { position: absolute; top: 16px; left: 16px; background: rgba(255,254,250,.92); padding: 6px 9px; color: var(--ink); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .project-card-body { display: flex; justify-content: space-between; gap: 18px; align-items: start; padding: 17px 0 0; }
+    .project-index { margin: 0 0 7px; color: var(--accent); font-family: var(--serif); font-size: 14px; }
+    .project-card h3 { margin: 0; font-size: clamp(17px, 2vw, 23px); line-height: 1.35; letter-spacing: -.045em; font-weight: 650; }
+    .project-card p { max-width: 440px; margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .round-link { display: grid; place-items: center; flex: 0 0 41px; width: 41px; height: 41px; margin-top: 9px; border: 1px solid var(--line); border-radius: 50%; transition: background .2s, color .2s, transform .2s; }
+    .project-card:hover .round-link { background: var(--ink); color: white; border-color: var(--ink); transform: rotate(45deg); }
+    .under-grid { margin-top: 36px; display: flex; justify-content: flex-end; }
+
+    /* Intro / skills / CTA */
+    .about-split { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(35px, 8vw, 120px); align-items: start; }
+    .about-aside { position: sticky; top: 110px; }
+    .about-aside .big-index { color: #c6c7bd; font-family: var(--serif); font-size: clamp(64px, 10vw, 130px); line-height: .9; }
+    .about-aside p { max-width: 220px; margin: 20px 0 0; color: var(--muted); font-size: 12px; }
+    .about-main h2 { margin: 0 0 24px; font-size: clamp(30px, 4.6vw, 54px); line-height: 1.2; font-weight: 550; letter-spacing: -.065em; word-break: keep-all; }
+    .about-main h2 em { color: var(--accent); font-family: var(--serif); font-weight: 400; }
+    .about-main p { max-width: 710px; color: var(--muted); font-size: 14px; word-break: keep-all; }
+    .skill-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 32px; }
+    .skill-item { min-height: 104px; padding: 18px; background: var(--paper); display: flex; flex-direction: column; justify-content: space-between; }
+    .skill-item span { color: var(--muted); font-size: 10px; }
+    .skill-item strong { font-size: 13px; letter-spacing: -.025em; }
+    .contact-band { background: var(--ink); color: var(--white); padding: clamp(44px, 7vw, 85px) 0; }
+    .contact-band-inner { display: flex; align-items: end; justify-content: space-between; gap: 35px; }
+    .contact-band .eyebrow { color: #d99379; }
+    .contact-band h2 { max-width: 700px; margin: 0; font-size: clamp(34px, 5vw, 62px); line-height: 1.12; letter-spacing: -.065em; font-weight: 500; }
+    .contact-band h2 span { color: #c8c9be; font-family: var(--serif); font-style: italic; font-weight: 400; }
+    .contact-band .band-actions { display: flex; flex-wrap: wrap; gap: 10px; flex-shrink: 0; }
+    .contact-band .btn.secondary { color: white; border-color: #656960; }
+    .contact-band .btn.secondary:hover { background: white; color: var(--ink); border-color: white; }
+
+    /* Page layout */
+    .page-intro { padding: clamp(48px, 7vw, 88px) 0 52px; border-bottom: 1px solid var(--line); }
+    .page-intro h1 { margin: 0; font-size: clamp(45px, 7vw, 84px); line-height: 1.02; letter-spacing: -.075em; font-weight: 500; }
+    .page-intro .intro-row { display: flex; justify-content: space-between; align-items: end; gap: 28px; margin-top: 22px; }
+    .page-intro .intro-row p { max-width: 550px; margin: 0; color: var(--muted); font-size: 14px; word-break: keep-all; }
+    .count { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .portfolio-list { padding-top: 44px; }
+    .portfolio-list .project-grid { row-gap: 52px; }
+    .breadcrumbs { padding: 22px 0; color: var(--muted); font-size: 11px; }
+    .breadcrumbs a:hover { color: var(--accent); }
+    .breadcrumbs span { padding: 0 9px; color: #a4a59b; }
+
+    /* Detail pages */
+    .detail-hero { padding: 35px 0 0; }
+    .detail-meta { display: flex; align-items: start; justify-content: space-between; gap: 28px; margin-bottom: 28px; }
+    .detail-meta .project-label { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .15em; }
+    .detail-meta h1 { max-width: 850px; margin: 10px 0 14px; font-size: clamp(36px, 5.8vw, 70px); line-height: 1.12; letter-spacing: -.065em; font-weight: 520; word-break: keep-all; }
+    .detail-meta p { max-width: 670px; margin: 0; color: var(--muted); font-size: 14px; word-break: keep-all; }
+    .detail-hero-art { position: relative; overflow: hidden; background: #d9ded7; aspect-ratio: 2.15 / 1; }
+    .detail-hero-art svg { width: 100%; height: 100%; }
+    .detail-hero-art .art-label { bottom: 20px; }
+    .detail-section { padding: clamp(56px, 7vw, 92px) 0; border-bottom: 1px solid var(--line); }
+    .detail-section-heading { display: grid; grid-template-columns: 140px 1fr; gap: 24px; margin-bottom: 32px; }
+    .detail-section-heading .num { color: var(--accent); font-family: var(--serif); font-size: 17px; }
+    .detail-section-heading h2 { margin: 0; font-size: clamp(26px, 4vw, 40px); line-height: 1.18; font-weight: 550; letter-spacing: -.055em; }
+    .detail-section-heading p { max-width: 660px; margin: 11px 0 0; color: var(--muted); font-size: 13px; }
+    .overview-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; }
+    .overview-copy h3 { margin: 0 0 13px; font-size: 17px; }
+    .overview-copy p { color: var(--muted); font-size: 13px; word-break: keep-all; }
+    .facts { border-top: 1px solid var(--line); }
+    .fact-row { display: grid; grid-template-columns: 105px 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+    .fact-row dt { color: var(--muted); }
+    .fact-row dd { margin: 0; font-weight: 650; }
+    .analysis-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+    .diagram-card { background: var(--paper-2); padding: 16px; }
+    .diagram-card svg { width: 100%; aspect-ratio: 1.45/1; }
+    .diagram-card h3 { margin: 16px 0 4px; font-size: 14px; }
+    .diagram-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .concept-band { display: grid; grid-template-columns: .78fr 1.22fr; gap: 35px; align-items: center; padding: clamp(25px, 5vw, 52px); background: #e7e7dd; }
+    .concept-band h3 { margin: 0; font-size: clamp(26px, 4vw, 42px); font-weight: 500; letter-spacing: -.055em; line-height: 1.2; }
+    .concept-band p { margin: 0; color: #5d6259; font-size: 13px; }
+    .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .plan-visual { position: relative; min-height: 250px; background: #e6e5df; padding: 16px; }
+    .plan-visual svg { width: 100%; height: 100%; min-height: 230px; }
+    .plan-visual h3 { margin: 10px 0 0; font-size: 13px; }
+    .gallery-main { background: #e2e3dc; }
+    .gallery-main svg { width: 100%; aspect-ratio: 1.95/1; }
+    .gallery-thumbs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 18px; }
+    .gallery-thumbs figure { margin: 0; background: #e6e5df; }
+    .gallery-thumbs svg { width: 100%; aspect-ratio: 1.45/1; }
+    .gallery-thumbs figcaption { padding: 11px 14px; color: var(--muted); font-size: 11px; }
+    .outcome-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 20px; }
+    .outcome-number { display: flex; flex-direction: column; justify-content: center; min-height: 250px; padding: 30px; color: white; background: var(--accent); }
+    .outcome-number strong { font-family: var(--serif); font-size: clamp(54px, 8vw, 94px); font-weight: 400; line-height: 1; letter-spacing: -.06em; }
+    .outcome-number span { margin-top: 14px; font-size: 12px; }
+    .outcome-copy { display: flex; flex-direction: column; justify-content: center; padding: 30px; background: var(--paper-2); }
+    .outcome-copy h3 { margin: 0 0 14px; font-size: 23px; letter-spacing: -.04em; }
+    .outcome-copy p { margin: 0; color: var(--muted); font-size: 13px; }
+    .detail-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 33px 0 70px; }
+    .detail-nav .prev-next { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    /* About / Resume / Contact pages */
+    .profile-hero { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(35px, 7vw, 90px); padding: 56px 0 76px; align-items: center; }
+    .profile-art { position: relative; background: #d8ded8; min-height: 340px; display: grid; place-items: center; overflow: hidden; }
+    .profile-art::after { content: ""; position: absolute; inset: 20px; border: 1px solid rgba(40,49,42,.27); }
+    .profile-art svg { width: 100%; max-height: 370px; }
+    .profile-copy h2 { margin: 0; font-size: clamp(38px, 5vw, 60px); font-weight: 500; letter-spacing: -.07em; line-height: 1.1; }
+    .profile-copy .role { margin: 13px 0 25px; color: var(--accent); font-size: 12px; font-weight: 750; }
+    .profile-facts { display: grid; grid-template-columns: 85px 1fr; gap: 8px 14px; margin: 0 0 28px; font-size: 12px; }
+    .profile-facts dt { color: var(--muted); }
+    .profile-facts dd { margin: 0; }
+    .philosophy-panel { display: grid; grid-template-columns: .8fr 1.2fr; gap: 45px; padding: clamp(28px, 5vw, 56px); background: var(--white); }
+    .philosophy-panel h2 { margin: 0; max-width: 380px; font-size: clamp(27px, 4vw, 43px); line-height: 1.2; letter-spacing: -.06em; font-weight: 500; }
+    .philosophy-panel p { margin: 0 0 13px; color: var(--muted); font-size: 13px; word-break: keep-all; }
+    .competency-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .competency { padding: 25px; border: 1px solid var(--line); background: rgba(255,254,250,.45); }
+    .competency .mini { color: var(--accent); font-family: var(--serif); font-size: 16px; }
+    .competency h3 { margin: 12px 0; font-size: 17px; }
+    .chips { display: flex; gap: 7px; flex-wrap: wrap; }
+    .chip { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 99px; padding: 6px 11px; color: #52574e; font-size: 10px; }
+    .timeline { border-top: 1px solid var(--line); }
+    .timeline-row { display: grid; grid-template-columns: 155px 1fr; gap: 22px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+    .timeline-row .year { color: var(--accent); font-family: var(--serif); font-size: 16px; }
+    .timeline-row h3 { margin: 0 0 5px; font-size: 17px; }
+    .timeline-row p { margin: 0; max-width: 700px; color: var(--muted); font-size: 12px; }
+
+    .resume-top { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+    .resume-summary { display: grid; grid-template-columns: .7fr 1.3fr; gap: 44px; padding: 35px; background: var(--white); }
+    .resume-summary h2 { margin: 0 0 5px; font-size: 32px; font-weight: 550; letter-spacing: -.055em; }
+    .resume-summary .role { color: var(--accent); font-size: 12px; font-weight: 750; }
+    .resume-summary dl { display: grid; grid-template-columns: 90px 1fr; align-content: start; gap: 9px 16px; margin: 0; font-size: 12px; }
+    .resume-summary dt { color: var(--muted); }
+    .resume-summary dd { margin: 0; overflow-wrap: anywhere; }
+    .resume-project { display: grid; grid-template-columns: 90px 1fr auto; gap: 20px; align-items: start; padding: 25px 0; border-bottom: 1px solid var(--line); }
+    .resume-project .num { color: var(--accent); font-family: var(--serif); font-size: 19px; }
+    .resume-project h3 { margin: 0 0 8px; font-size: 19px; letter-spacing: -.04em; }
+    .resume-project p { max-width: 720px; margin: 0; color: var(--muted); font-size: 12px; }
+    .resume-project .text-link { white-space: nowrap; margin-top: 5px; }
+    .resume-skill-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .resume-skill-row strong { font-size: 13px; }
+    .resume-skill-row .chips { align-items: start; }
+
+    .contact-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 80px); padding: 58px 0 90px; }
+    .contact-copy h2 { margin: 0 0 18px; font-size: clamp(35px, 5vw, 56px); line-height: 1.15; letter-spacing: -.065em; font-weight: 520; }
+    .contact-copy > p { max-width: 420px; margin: 0 0 35px; color: var(--muted); font-size: 13px; }
+    .contact-detail { padding: 17px 0; border-top: 1px solid var(--line); }
+    .contact-detail:last-child { border-bottom: 1px solid var(--line); }
+    .contact-detail .label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    .contact-detail a { font-size: clamp(16px, 2vw, 21px); font-weight: 550; overflow-wrap: anywhere; }
+    .contact-detail a:hover { color: var(--accent); }
+    .contact-form { padding: clamp(22px, 4vw, 40px); background: var(--white); }
+    .contact-form h3 { margin: 0 0 7px; font-size: 23px; letter-spacing: -.05em; }
+    .contact-form > p { margin: 0 0 25px; color: var(--muted); font-size: 12px; }
+    .field { display: block; margin-bottom: 17px; }
+    .field span { display: block; margin-bottom: 7px; font-size: 11px; font-weight: 750; }
+    .field input, .field textarea { width: 100%; padding: 12px 13px; border: 1px solid var(--line); outline: none; border-radius: 0; background: #fbfaf6; color: var(--ink); font-size: 13px; transition: border-color .2s; }
+    .field input:focus, .field textarea:focus { border-color: var(--accent); }
+    .field textarea { min-height: 125px; resize: vertical; }
+    .form-note { margin-top: 11px; color: var(--muted); font-size: 10px; }
+    .inline-notice { margin-top: 15px; padding: 12px; background: #edf0e8; color: #3f533d; font-size: 12px; }
+
+    /* Footer */
+    .site-footer { padding: 25px 0; background: var(--paper-2); border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .footer-name { font-size: 12px; font-weight: 800; letter-spacing: .04em; }
+    .footer-meta { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: 10px; }
+    .footer-meta a:hover { color: var(--accent); }
+
+    /* Utilities / responsive */
+    .page { display: none; min-height: 65vh; animation: enter .32s ease both; }
+    .page.active { display: block; }
+    @keyframes enter { from { opacity: .35; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .topline { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-bottom: 17px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .topline h2 { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .05em; }
+    .topline small { color: var(--muted); font-size: 10px; }
+    .mobile-only { display: none; }
+    @media (max-width: 900px) {
+      .header-inner { min-height: 68px; }
+      .main-nav { gap: 18px; }
+      .header-cta { display: none; }
+      .hero-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; }
+      .hero-art { min-height: 410px; }
+      .hero h1 { font-size: clamp(46px, 7vw, 66px); }
+      .about-split { grid-template-columns: .6fr 1.4fr; gap: 42px; }
+      .contact-band-inner { align-items: start; flex-direction: column; }
+      .overview-grid { gap: 30px; }
+      .detail-section-heading { grid-template-columns: 100px 1fr; }
+      .resume-project { grid-template-columns: 60px 1fr; }
+      .resume-project .text-link { grid-column: 2; justify-self: start; }
+    }
+    @media (max-width: 680px) {
+      :root { --gutter: 20px; }
+      .header-inner { min-height: 64px; gap: 12px; }
+      .brand-copy strong { font-size: 12px; }
+      .brand-copy small { font-size: 9px; }
+      .menu-toggle { display: flex; flex-shrink: 0; }
+      .main-nav { display: none; position: fixed; inset: 64px 0 0; padding: 30px var(--gutter); background: var(--paper); align-items: stretch; flex-direction: column; gap: 0; z-index: 120; }
+      .main-nav.open { display: flex; }
+      .main-nav a { display: block; padding: 17px 0; border-bottom: 1px solid var(--line); font-size: 20px; }
+      .main-nav a::after { display: none; }
+      .mobile-only { display: block; }
+      .hero { padding-top: 35px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero h1 { font-size: clamp(50px, 14vw, 74px); }
+      .hero-desc { font-size: 14px; }
+      .hero-meta { margin-top: 32px; gap: 20px; }
+      .hero-art { min-height: 350px; }
+      .section { padding: 68px 0; }
+      .section-head { align-items: start; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+      .section-head h2 { font-size: 35px; }
+      .project-grid { grid-template-columns: 1fr; gap: 34px; }
+      .project-image { aspect-ratio: 1.18 / 1; }
+      .project-card h3 { font-size: 20px; }
+      .about-split { grid-template-columns: 1fr; gap: 20px; }
+      .about-aside { position: static; display: flex; align-items: center; gap: 18px; }
+      .about-aside .big-index { font-size: 58px; }
+      .about-aside p { margin: 0; }
+      .about-main h2 { font-size: 36px; }
+      .skill-strip { grid-template-columns: repeat(2, 1fr); }
+      .skill-item { min-height: 90px; padding: 14px; }
+      .contact-band-inner { gap: 25px; }
+      .contact-band h2 { font-size: 39px; }
+      .contact-band .band-actions { width: 100%; }
+      .contact-band .btn { flex: 1; }
+      .page-intro { padding: 48px 0 34px; }
+      .page-intro h1 { font-size: 54px; }
+      .page-intro .intro-row { align-items: start; flex-direction: column; gap: 15px; }
+      .portfolio-list { padding-top: 30px; }
+      .portfolio-list .project-grid { row-gap: 37px; }
+      .detail-meta { flex-direction: column; gap: 17px; }
+      .detail-meta h1 { font-size: 39px; }
+      .detail-meta p { font-size: 13px; }
+      .detail-hero-art { aspect-ratio: 1.18 / 1; }
+      .detail-section-heading { grid-template-columns: 1fr; gap: 8px; margin-bottom: 22px; }
+      .detail-section-heading h2 { font-size: 30px; }
+      .overview-grid, .analysis-grid, .plan-grid, .outcome-grid { grid-template-columns: 1fr; }
+      .concept-band { grid-template-columns: 1fr; gap: 18px; }
+      .gallery-thumbs { gap: 10px; }
+      .gallery-thumbs figcaption { padding: 9px; font-size: 10px; }
+      .detail-nav { align-items: start; flex-direction: column; }
+      .detail-nav .prev-next { justify-content: space-between; width: 100%; }
+      .profile-hero { grid-template-columns: 1fr; gap: 28px; padding: 35px 0 55px; }
+      .profile-art { min-height: 290px; }
+      .profile-copy h2 { font-size: 48px; }
+      .philosophy-panel { grid-template-columns: 1fr; gap: 20px; }
+      .competency-grid { grid-template-columns: 1fr; }
+      .timeline-row { grid-template-columns: 85px 1fr; gap: 15px; }
+      .resume-top { align-items: start; flex-direction: column; }
+      .resume-summary { grid-template-columns: 1fr; gap: 22px; padding: 24px; }
+      .resume-summary dl { grid-template-columns: 75px 1fr; }
+      .resume-project { grid-template-columns: 38px 1fr; gap: 12px; }
+      .resume-project h3 { font-size: 17px; }
+      .resume-skill-row { grid-template-columns: 1fr; gap: 10px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 32px; padding: 36px 0 65px; }
+      .contact-copy h2 { font-size: 42px; }
+      .footer-inner { flex-direction: column; align-items: start; gap: 13px; }
+      .footer-meta { gap: 12px; }
+      .btn { min-height: 46px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      body { background: white; }
+      .site-header, .site-footer, .no-print, .btn, .text-link, .detail-nav { display: none !important; }
+      .page { display: none !important; }
+      .page.active { display: block !important; }
+      .shell { width: 100%; }
+      .section, .detail-section { padding: 22px 0; }
+      .resume-summary, .competency, .contact-form { break-inside: avoid; }
+      .resume-top { margin-bottom: 22px; }
+      a { text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#/" class="brand" aria-label="이시형 포트폴리오 홈으로 이동">
+        <span class="brand-mark">S.</span>
+        <span class="brand-copy"><strong>이시형</strong><small>Architecture Portfolio</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="주요 메뉴">
+        <a href="#/portfolio" data-nav="portfolio">Portfolio</a>
+        <a href="#/about" data-nav="about">About</a>
+        <a href="#/resume" data-nav="resume">Resume</a>
+        <a href="#/contact" data-nav="contact">Contact</a>
+        <a class="mobile-only" href="mailto:dktlqkf002@gmail.com">이메일 보내기 ↗</a>
+      </nav>
+      <a class="btn header-cta" href="#/contact">이메일 문의 <span class="arrow">↗</span></a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mainNav"><span></span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HOME -->
+    <section class="page active" id="page-home" data-page="home" aria-labelledby="home-title">
+      <div class="hero">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="hero-kicker">Architecture · Portfolio 2026</p>
+            <h1 id="home-title">공간을 읽고,<span>가능성을 설계하다.</span></h1>
+            <p class="hero-desc">안녕하세요, 건축설계 신입 지원자 이시형입니다. 공간과 이용자, 대지의 조건을 함께 살피며 기존 공간이 가진 가능성을 새로운 쓰임으로 연결하고자 합니다.</p>
+            <div class="btn-row">
+              <a class="btn" href="#/portfolio">작품 둘러보기 <span class="arrow">↗</span></a>
+              <a class="btn secondary" href="#/resume">이력 및 역량 보기</a>
+            </div>
+            <div class="hero-meta">
+              <div><span>EDUCATION</span><strong>세종대학교 건축학과</strong></div>
+              <div><span>LOCATION</span><strong>Incheon, Korea</strong></div>
+              <div><span>FOCUS</span><strong>Architecture Design</strong></div>
+            </div>
+          </div>
+          <div class="hero-art" aria-label="건축 매스를 표현한 임시 그래픽">
+            <span class="art-number">FIG. 01 / STUDY</span>
+            <svg viewBox="0 0 700 620" role="img" aria-label="건축 매스와 입면을 형상화한 그래픽" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="heroGround" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1eee5"/><stop offset="1" stop-color="#8a9c93"/></linearGradient>
+                <linearGradient id="heroFace" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f3e8"/><stop offset="1" stop-color="#d8d9cf"/></linearGradient>
+                <linearGradient id="heroSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#74877f"/><stop offset="1" stop-color="#40544e"/></linearGradient>
+              </defs>
+              <path d="M0 442 L330 345 L700 441 L700 620 L0 620Z" fill="#a5b2a8" opacity=".65"/>
+              <path d="M50 453 L345 380 L652 452" fill="none" stroke="#edf0e8" stroke-width="2" opacity=".8"/>
+              <path d="M75 495 L345 427 L622 495 M104 536 L345 476 L590 536 M140 578 L345 523 L550 578" fill="none" stroke="#edf0e8" stroke-width="1.2" opacity=".6"/>
+              <g transform="translate(95 75)">
+                <path d="M78 195 L330 110 L500 178 L246 266Z" fill="#f7f3e8" stroke="#6c7b70" stroke-width="1.5"/>
+                <path d="M78 195 L246 266 L246 444 L78 374Z" fill="url(#heroFace)" stroke="#6c7b70" stroke-width="1.5"/>
+                <path d="M246 266 L500 178 L500 353 L246 444Z" fill="url(#heroSide)" stroke="#435950" stroke-width="1.5"/>
+                <path d="M108 210 L216 255 L216 395 L108 350Z" fill="#a6b9b1" stroke="#788e84" stroke-width="1.3"/>
+                <path d="M130 218 L130 359 M154 228 L154 369 M178 238 L178 379 M202 248 L202 389" stroke="#edf1e8" stroke-width="3" opacity=".9"/>
+                <path d="M275 276 L471 207 M275 315 L471 246 M275 354 L471 285 M275 393 L471 324" stroke="#c8d2ca" stroke-width="2" opacity=".8"/>
+                <path d="M246 266 L246 444 M330 237 L330 414 M414 207 L414 384" stroke="#53685e" stroke-width="1.2" opacity=".7"/>
+                <path d="M78 195 L78 374 L246 444 L500 353 L500 178" fill="none" stroke="#42574e" stroke-width="2"/>
+                <path d="M78 195 L330 110 L500 178" fill="none" stroke="#fffdf3" stroke-width="3"/>
+              </g>
+              <g stroke="#f5f2e8" stroke-width="1.2" opacity=".7"><path d="M35 88 H160 M35 98 H115 M540 90 H660 M585 100 H660"/><path d="M40 540 V580 M50 530 V585 M60 520 V590"/></g>
+              <circle cx="567" cy="150" r="49" fill="#f0e5c9" opacity=".6"/>
+              <circle cx="567" cy="150" r="35" fill="none" stroke="#f5f2e8" stroke-width="1.5"/>
+            </svg>
+            <span class="art-label">Spatial study / architectural form</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="section projects-section" aria-labelledby="featured-title">
+        <div class="shell">
+          <div class="section-head">
+            <div><p class="eyebrow">Selected works / 01—02</p><h2 id="featured-title">문제를 발견하고,<br>공간으로 답을 찾다.</h2></div>
+            <p>주요 프로젝트의 배경과 설계 과정, 결과물을 살펴보세요.</p>
+          </div>
+          <div class="project-grid" id="homeProjectGrid"></div>
+          <div class="under-grid"><a class="text-link" href="#/portfolio">전체 프로젝트 보기 <span class="arrow">↗</span></a></div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="home-about-title">
+        <div class="shell about-split">
+          <div class="about-aside"><div class="big-index">01—</div><p>PROFILE / APPROACH<br>공간을 바라보는 관점</p></div>
+          <div class="about-main">
+            <p class="eyebrow">A thoughtful approach to place</p>
+            <h2 id="home-about-title">건축은 형태를 만드는 일에서<br><em>사람과 장소를 연결하는 일</em>로.</h2>
+            <p>건축학 전공을 바탕으로 공간의 필요와 이용자, 대지 조건을 함께 검토해 왔습니다. 농어촌 폐교 활용 프로젝트에서는 기존 공간의 가능성과 지역의 요구를 연결하는 방향을 고민했습니다.</p>
+            <p>도면과 3D 공간 검토, 그래픽 시각화를 통해 설계 의도를 전달하고, 제작 과정에서는 자원과 일정의 제약 안에서 더 나은 방법을 찾으려 노력합니다.</p>
+            <a class="text-link" href="#/about">설계 관점과 강점 더 보기 <span class="arrow">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compact" style="background:var(--paper-2)" aria-labelledby="skills-title">
+        <div class="shell">
+          <div class="section-head"><div><p class="eyebrow">Tools & capabilities</p><h2 id="skills-title">생각을 도면으로,<br>도면을 이미지로.</h2></div><p>설계 검토부터 표현과 시각화까지 활용해 온 도구입니다.</p></div>
+          <div class="skill-strip">
+            <div class="skill-item"><span>01 / DRAWING</span><strong>AutoCAD</strong></div>
+            <div class="skill-item"><span>02 / MODELING</span><strong>SketchUp</strong></div>
+            <div class="skill-item"><span>03 / GRAPHIC</span><strong>Illustrator</strong></div>
+            <div class="skill-item"><span>04 / IMAGE</span><strong>Photoshop</strong></div>
+          </div>
+        </div>
+      </section>
+      <section class="contact-band">
+        <div class="shell contact-band-inner">
+          <div><p class="eyebrow">Let's connect</p><h2>더 나은 공간을 향한 고민을<br><span>함께 나누고 싶습니다.</span></h2></div>
+          <div class="band-actions"><a class="btn light" href="#/resume">이력서 확인 <span class="arrow">↗</span></a><a class="btn secondary" href="#/contact">연락하기 <span class="arrow">↗</span></a></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- PORTFOLIO LIST -->
+    <section class="page" id="page-portfolio" data-page="portfolio" aria-labelledby="portfolio-title">
+      <div class="shell page-intro">
+        <p class="eyebrow">Selected works / 2020—2025</p>
+        <h1 id="portfolio-title">Portfolio<span class="serif" style="color:var(--accent)">.</span></h1>
+        <div class="intro-row"><p>설계 배경부터 공간 계획, 최종 결과물까지.<br>프로젝트별 설계 과정과 문제 해결의 기록을 소개합니다.</p><span class="count">PROJECTS <strong id="projectCount">02</strong></span></div>
+      </div>
+      <div class="shell portfolio-list">
+        <div class="topline"><h2>ALL PROJECTS</h2><small>각 프로젝트를 선택해 상세 내용을 확인하세요.</small></div>
+        <div class="project-grid" id="portfolioProjectGrid"></div>
+      </div>
+      <section class="contact-band"><div class="shell contact-band-inner"><div><p class="eyebrow">Continue exploring</p><h2>작업을 넘어,<br><span>작업하는 사람을 소개합니다.</span></h2></div><div class="band-actions"><a class="btn light" href="#/about">About 보기 <span class="arrow">↗</span></a><a class="btn secondary" href="#/contact">Contact <span class="arrow">↗</span></a></div></div></section>
+    </section>
+
+    <!-- PROJECT DETAIL 1 -->
+    <section class="page" id="page-project-rural" data-page="project-rural" aria-labelledby="rural-title">
+      <div class="shell breadcrumbs"><a href="#/">Home</a><span>/</span><a href="#/portfolio">Portfolio</a><span>/</span>농어촌 폐교 활용 프로젝트</div>
+      <div class="shell detail-hero">
+        <div class="detail-meta"><div><span class="project-label">PROJECT 01 / ARCHITECTURAL DESIGN</span><h1 id="rural-title">농어촌 폐교 활용을 통한<br>지역 인프라 확충</h1><p>학령인구 감소와 고령화에 따른 지역 인프라 부족 문제를 바탕으로, 기존 학교의 입지와 공간적 가능성을 지역사회에 필요한 새로운 쓰임으로 연결하는 건축 프로젝트입니다.</p></div><a class="text-link" href="#/portfolio">목록으로 돌아가기 <span class="arrow">↗</span></a></div>
+        <div class="detail-hero-art">
+          <svg viewBox="0 0 1200 540" preserveAspectRatio="xMidYMid slice" role="img" aria-label="폐교 활용 건축 프로젝트를 위한 임시 건축 매스 그래픽">
+            <defs><linearGradient id="ruralBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce2d8"/><stop offset="1" stop-color="#9dafa2"/></linearGradient><linearGradient id="ruralWall" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f7f3e9"/><stop offset="1" stop-color="#d2d7cc"/></linearGradient></defs>
+            <rect width="1200" height="540" fill="url(#ruralBg)"/><path d="M0 365 L300 290 L680 365 L1200 245 V540 H0Z" fill="#bdc9bc"/><path d="M0 425 L300 350 L680 425 L1200 305 M0 468 L300 393 L680 468 L1200 348" fill="none" stroke="#edf0e7" stroke-width="2" opacity=".7"/>
+            <g transform="translate(230 40)"><path d="M20 150 L370 70 L720 150 L370 237Z" fill="#faf6ea" stroke="#667a6e" stroke-width="2"/><path d="M20 150 L370 237 L370 400 L20 313Z" fill="url(#ruralWall)" stroke="#667a6e" stroke-width="2"/><path d="M370 237 L720 150 L720 313 L370 400Z" fill="#70887d" stroke="#52685e" stroke-width="2"/>
+            <path d="M52 164 L150 188 L150 341 L52 317Z M175 194 L273 218 L273 371 L175 347Z" fill="#afc3bb" stroke="#788c80" stroke-width="2"/><path d="M73 169 L73 322 M95 174 L95 327 M117 180 L117 333 M196 199 L196 352 M218 205 L218 357 M240 210 L240 362" stroke="#f7f4e9" stroke-width="4"/>
+            <path d="M405 235 L685 166 M405 275 L685 206 M405 315 L685 246 M405 355 L685 286" stroke="#d4ded4" stroke-width="3"/><path d="M470 212 L470 375 M570 187 L570 350 M650 166 L650 330" stroke="#52685e" stroke-width="2"/>
+            <path d="M20 150 L370 70 L720 150" fill="none" stroke="#fffdf2" stroke-width="4"/>
+            </g><g opacity=".6" stroke="#f8f5eb"><path d="M70 80 H210 M70 95 H160 M970 75 H1125 M1020 90 H1125" stroke-width="2"/><circle cx="1010" cy="175" r="42" fill="#efe5c9" stroke-width="2"/></g>
+          </svg>
+          <span class="art-label">Existing place / new community use</span>
+        </div>
+      </div>
+      <section class="detail-section"><div class="shell"><div class="detail-section-heading"><span class="num">01 / OVERVIEW</span><div><h2>프로젝트 개요</h2><p>지역의 필요와 기존 공간이 가진 잠재력을 연결하는 데서 설계의 출발점을 찾았습니다.</p></div></div><div class="overview-grid"><div class="overview-copy"><h3>문제에서 출발한 공간 재구성</h3><p>학령인구 감소로 활용도가 낮아진 학교와 고령화에 따른 농어촌 지역의 인프라 부족을 함께 살펴보았습니다. 접근성이 좋은 기존 학교의 위치와 공간을 지역 주민에게 필요한 기능을 담는 장소로 재구성하는 방향을 구상했습니다.</p><p>단순히 건물을 다시 사용하는 데 그치지 않고, 지역과 주민의 관계 속에서 공간이 어떤 역할을 할 수 있는지 고민한 프로젝트입니다.</p></div><dl class="facts"><div class="fact-row"><dt>프로젝트 유형</dt><dd>건축설계 / 지역 인프라</dd></div><div class="fact-row"><dt>핵심 주제</dt><dd>폐교 재활용 · 지역사회</dd></div><div class="fact-row"><dt>사용 도구</dt><dd>AutoCAD, SketchUp,<br>Illustrator, Photoshop</dd></div><div class="fact-row"><dt>프로젝트 기간</dt><dd>추가 입력 필요</dd></div><div class="fact-row"><dt>개인 역할</dt><dd>실제 수행 범위에 맞춰 입력</dd></div></dl></div></div></section>
+      <section class="detail-section" style="background:var(--white)"><div class="shell"><div class="detail-section-heading"><span class="num">02 / ANALYSIS</span><div><h2>배경 및 대지 분석</h2><p>지역 문제와 장소의 조건을 읽고, 설계에서 다뤄야 할 질문을 정리합니다.</p></div></div><div class="analysis-grid"><article class="diagram-card"><svg viewBox="0 0 420 270" role="img" aria-label="지역 인프라 관계를 나타내는 개념 다이어그램"><rect x="0" y="0" width="420" height="270" fill="#e0e4da"/><path d="M0 205 L85 158 L140 180 L220 126 L302 155 L420 104 V270 H0Z" fill="#bac8b9"/><path d="M0 235 L110 189 L210 215 L310 163 L420 185" fill="none" stroke="#f7f4e9" stroke-width="3"/><g fill="#f8f6ed" stroke="#7e9081" stroke-width="1.5"><rect x="62" y="65" width="70" height="56"/><rect x="154" y="44" width="93" height="72"/><rect x="276" y="73" width="70" height="49"/></g><g stroke="#8c9c8e" stroke-width="2"><path d="M80 65 V121 M97 65 V121 M114 65 V121 M176 44 V116 M199 44 V116 M222 44 V116 M294 73 V122 M315 73 V122"/></g><g fill="#b84e32"><circle cx="107" cy="147" r="5"/><circle cx="200" cy="135" r="5"/><circle cx="313" cy="145" r="5"/></g><path d="M107 147 L200 135 L313 145" fill="none" stroke="#b84e32" stroke-width="1.5" stroke-dasharray="4 5"/></svg><h3>지역과 생활 인프라</h3><p>지역 내 필요한 기능과 주민의 일상적 접근성을 조사한 자료로 교체합니다.</p></article><article class="diagram-card"><svg viewBox="0 0 420 270" role="img" aria-label="학교 위치와 접근성 분석을 나타내는 개념 다이어그램"><rect width="420" height="270" fill="#e6e6dc"/><g stroke="#c1c7bb" stroke-width="18" fill="none"><path d="M-20 80 L440 200 M80 -20 L300 300 M-10 220 L430 70"/></g><g stroke="#f9f7ef" stroke-width="2" fill="none"><path d="M-20 80 L440 200 M80 -20 L300 300 M-10 220 L430 70"/></g><path d="M95 57 L285 45 L348 141 L231 225 L78 165Z" fill="#bfcec1" stroke="#7c9181" stroke-width="2"/><rect x="155" y="93" width="105" height="79" fill="#fbf6e9" stroke="#677b6c" stroke-width="2"/><path d="M155 93 L208 71 L260 93" fill="#e4e4d8" stroke="#677b6c" stroke-width="2"/><circle cx="208" cy="132" r="62" fill="none" stroke="#b84e32" stroke-width="2" stroke-dasharray="5 5"/><circle cx="208" cy="132" r="4" fill="#b84e32"/></svg><h3>기존 학교의 위치와 접근성</h3><p>실제 대지·도로·생활권 분석 도면으로 교체해 입지의 장점을 전달합니다.</p></article></div><p class="muted" style="font-size:12px;margin:20px 0 0">※ 현재 다이어그램은 레이아웃 예시입니다. 실제 프로젝트의 대지 분석 자료로 교체해야 합니다.</p></div></section>
+      <section class="detail-section"><div class="shell"><div class="detail-section-heading"><span class="num">03 / CONCEPT</span><div><h2>설계 개념</h2><p>분석 결과를 공간 전략으로 연결합니다.</p></div></div><div class="concept-band"><h3>기존 공간의 가능성을<br>지역의 새로운 쓰임으로.</h3><p>학교가 가진 입지적 이점과 기존 공간의 구조를 출발점으로 삼아, 지역 주민에게 필요한 기능을 담을 수 있는 방향을 검토했습니다. 이 영역에는 실제 설계 개념, 프로그램 구성, 기존 건물과 신규 공간의 관계를 보여주는 설명과 다이어그램을 배치합니다.</p></div></div></section>
+      <section class="detail-section" style="background:var(--white)"><div class="shell"><div class="detail-section-heading"><span class="num">04 / DEVELOPMENT</span><div><h2>설계 전개</h2><p>대지 계획부터 도면과 공간 모델링까지 설계 결과가 만들어지는 과정을 보여줍니다.</p></div></div><div class="plan-grid"><article class="plan-visual"><svg viewBox="0 0 500 290" role="img" aria-label="배치도 플레이스홀더"><rect width="500" height="290" fill="#eeede4"/><g stroke="#bdc5b8" stroke-width="18" fill="none"><path d="M20 20 L480 270 M-20 180 L420 -20 M60 300 L500 40"/></g><g stroke="#faf8f0" stroke-width="2" fill="none"><path d="M20 20 L480 270 M-20 180 L420 -20 M60 300 L500 40"/></g><path d="M130 58 L330 45 L385 166 L268 240 L112 175Z" fill="#ced8ca" stroke="#839582" stroke-width="2"/><rect x="185" y="95" width="130" height="86" fill="#fffdf4" stroke="#6f8371" stroke-width="2"/><path d="M185 124 H315 M229 95 V181 M273 95 V181" stroke="#aebbae" stroke-width="2"/><circle cx="250" cy="138" r="94" fill="none" stroke="#b84e32" stroke-dasharray="5 5"/></svg><h3>배치도 / 대지 계획</h3></article><article class="plan-visual"><svg viewBox="0 0 500 290" role="img" aria-label="평면도 플레이스홀더"><rect width="500" height="290" fill="#f8f6ef"/><g stroke="#667b6e" stroke-width="5" fill="none"><rect x="67" y="38" width="366" height="214"/><path d="M190 38 V252 M313 38 V252 M67 145 H433 M190 97 H313 M190 201 H313 M253 145 V252"/></g><g fill="#dbe4d8"><rect x="75" y="46" width="106" height="91"/><rect x="199" y="46" width="106" height="43"/><rect x="321" y="153" width="104" height="91"/><rect x="75" y="153" width="106" height="91"/></g><g stroke="#b84e32" stroke-width="2"><path d="M198 106 H305 M198 116 H305 M198 126 H305"/></g></svg><h3>평면도 / 공간 구성</h3></article></div></div></section>
+      <section class="detail-section"><div class="shell"><div class="detail-section-heading"><span class="num">05 / FINAL</span><div><h2>최종 결과물</h2><p>최종 렌더링과 주요 공간, 패널 이미지를 배치합니다.</p></div></div><div class="gallery-main"><svg viewBox="0 0 1200 560" role="img" aria-label="최종 렌더링 이미지 교체 영역"><defs><linearGradient id="rFinal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8e0d8"/><stop offset="1" stop-color="#a9bbb1"/></linearGradient></defs><rect width="1200" height="560" fill="url(#rFinal)"/><path d="M0 365 L300 270 L700 360 L1200 235 V560 H0Z" fill="#b3c2b4"/><g transform="translate(245 45)"><path d="M30 135 L360 45 L690 130 L360 222Z" fill="#fcf8ed" stroke="#708576" stroke-width="2"/><path d="M30 135 L360 222 L360 405 L30 317Z" fill="#e5e6da" stroke="#708576" stroke-width="2"/><path d="M360 222 L690 130 L690 313 L360 405Z" fill="#768c80" stroke="#4f695a" stroke-width="2"/><path d="M65 149 L150 172 L150 349 L65 326Z M175 179 L260 202 L260 379 L175 356Z" fill="#b8ccc0" stroke="#7b9182" stroke-width="1.5"/><path d="M390 218 L653 144 M390 258 L653 184 M390 298 L653 224 M390 338 L653 264 M390 378 L653 304" stroke="#d9e2d8" stroke-width="3"/><path d="M30 135 L360 45 L690 130" fill="none" stroke="#fffdf2" stroke-width="4"/></g><text x="54" y="510" font-size="15" fill="#33473a" letter-spacing="3">FINAL PRESENTATION / REPLACE WITH PROJECT IMAGE</text></svg></div><div class="gallery-thumbs"><figure><svg viewBox="0 0 500 330" role="img" aria-label="공간 렌더링 교체 영역"><rect width="500" height="330" fill="#dce3d9"/><path d="M0 240 L200 170 L500 235 V330 H0Z" fill="#b6c6b6"/><path d="M65 105 L260 65 L430 120 L235 164Z" fill="#fbf8ed" stroke="#7b8f81" stroke-width="2"/><path d="M65 105 L235 164 L235 268 L65 211Z" fill="#d7dfd5" stroke="#7b8f81" stroke-width="2"/><path d="M235 164 L430 120 L430 222 L235 268Z" fill="#7b9284" stroke="#607968" stroke-width="2"/></svg><figcaption>주요 공간 렌더링 · 이미지 교체 영역</figcaption></figure><figure><svg viewBox="0 0 500 330" role="img" aria-label="건축 패널 교체 영역"><rect width="500" height="330" fill="#e8e7df"/><rect x="25" y="22" width="450" height="286" fill="#faf8f0" stroke="#c5c8bd"/><rect x="42" y="40" width="200" height="120" fill="#d8e1d8"/><path d="M42 132 L105 90 L160 122 L242 78 V160 H42Z" fill="#a3b7a8"/><rect x="258" y="40" width="199" height="7" fill="#667a6c"/><rect x="258" y="56" width="145" height="4" fill="#bdc1b6"/><rect x="258" y="68" width="182" height="4" fill="#bdc1b6"/><g stroke="#89968a" stroke-width="2" fill="none"><rect x="42" y="176" width="125" height="105"/><rect x="180" y="176" width="125" height="105"/><rect x="318" y="176" width="139" height="105"/></g><g stroke="#c1c7ba" stroke-width="1"><path d="M52 192 H157 M52 202 H157 M190 192 H295 M190 202 H295 M328 192 H447 M328 202 H447"/></g></svg><figcaption>최종 패널 또는 도면 · 이미지 교체 영역</figcaption></figure></div></div></section>
+      <section class="detail-section" style="background:var(--white)"><div class="shell"><div class="detail-section-heading"><span class="num">06 / SUMMARY</span><div><h2>프로젝트 요약</h2><p>설계에서 중요하게 다룬 질문과 최종 방향을 정리합니다.</p></div></div><div class="concept-band"><h3>지역의 필요를 읽고<br>공간의 역할을 다시 묻다.</h3><p>이 프로젝트는 기존 공간을 지역사회에 필요한 기능과 연결하는 방법을 탐색했습니다. 최종 게시 전에는 실제 도면과 결과물을 바탕으로 본인의 구체적 설계 판단, 공간 구성, 프로젝트에서 담당한 역할을 추가해 주세요.</p></div></div></section>
+      <div class="shell detail-nav"><div class="prev-next"><a class="text-link" href="#/portfolio">← 전체 작품</a><a class="text-link" href="#/portfolio/graduation-model">다음 프로젝트 <span class="arrow">↗</span></a></div><div class="btn-row"><a class="btn secondary" href="#/resume">이력서 확인</a><a class="btn" href="#/contact">연락하기 <span class="arrow">↗</span></a></div></div>
+    </section>
+
+    <!-- PROJECT DETAIL 2 -->
+    <section class="page" id="page-project-graduation" data-page="project-graduation" aria-labelledby="graduation-title">
+      <div class="shell breadcrumbs"><a href="#/">Home</a><span>/</span><a href="#/portfolio">Portfolio</a><span>/</span>졸업설계 모형 및 결과물 보완</div>
+      <div class="shell detail-hero">
+        <div class="detail-meta"><div><span class="project-label">PROJECT 02 / PROCESS & PROBLEM SOLVING</span><h1 id="graduation-title">졸업설계 모형 제작<br>및 결과물 보완</h1><p>모형 제작비 증가에 대응해 재료 사용량이 큰 콘타의 소재를 변경하고, 렌더링 이미지를 보완해 결과물의 완성도를 높인 경험입니다.</p></div><a class="text-link" href="#/portfolio">목록으로 돌아가기 <span class="arrow">↗</span></a></div>
+        <div class="detail-hero-art"><svg viewBox="0 0 1200 540" preserveAspectRatio="xMidYMid slice" role="img" aria-label="졸업설계 모형을 표현한 임시 그래픽"><defs><linearGradient id="gradBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e7e0d4"/><stop offset="1" stop-color="#b9c3b6"/></linearGradient></defs><rect width="1200" height="540" fill="url(#gradBg)"/><path d="M0 430 L1200 275 V540 H0Z" fill="#c1c8bc"/><g transform="translate(200 48)"><path d="M20 300 L370 180 L830 294 L470 424Z" fill="#f5f0e6" stroke="#89978a" stroke-width="2"/><path d="M20 300 L470 424 L470 452 L20 328Z" fill="#a9b6a7"/><path d="M470 424 L830 294 L830 322 L470 452Z" fill="#748677"/><g fill="#c8d4c7" stroke="#819181" stroke-width="1.5"><path d="M75 290 L230 237 L335 267 L180 321Z"/><path d="M375 269 L525 220 L645 250 L495 299Z"/><path d="M220 355 L365 311 L450 335 L305 383Z"/><path d="M560 355 L700 309 L770 328 L630 376Z"/></g><g stroke="#fdfaf2" stroke-width="2"><path d="M65 281 L175 309 M90 273 L200 302 M115 264 L225 293 M390 260 L500 290 M415 252 L525 282 M440 244 L550 274"/></g><g fill="#87998a"><rect x="295" y="118" width="20" height="105"/><rect x="324" y="109" width="20" height="110"/><rect x="353" y="100" width="20" height="115"/><rect x="382" y="92" width="20" height="112"/><rect x="411" y="100" width="20" height="106"/></g><path d="M285 120 L365 91 L446 117 L365 145Z" fill="#f7f2e7" stroke="#6f8273" stroke-width="2"/></g><g stroke="#fffdf4" stroke-width="2" opacity=".8"><path d="M55 80 H190 M55 95 H145 M980 80 H1135 M1035 96 H1135"/></g><text x="55" y="500" font-size="15" fill="#49584c" letter-spacing="3">MODEL MAKING / PROCESS STUDY</text></svg><span class="art-label">Process / material / outcome</span></div>
+      </div>
+      <section class="detail-section"><div class="shell"><div class="detail-section-heading"><span class="num">01 / OVERVIEW</span><div><h2>프로젝트 개요</h2><p>졸업설계 모형을 제작하고 결과물을 보완하며 비용과 완성도를 함께 고려했습니다.</p></div></div><div class="overview-grid"><div class="overview-copy"><h3>제작 조건 안에서 더 나은 방법 찾기</h3><p>모형 제작비가 예상보다 증가하자, 재료 사용량이 큰 콘타 부분의 소재를 변경했습니다. 제작 방식의 조정을 통해 비용을 절감하고, 렌더링 이미지는 별도로 보완해 최종 결과물의 시각적 완성도를 높였습니다.</p><p>주어진 자원과 전시 일정을 고려해 문제를 파악하고 실행 가능한 대안을 적용한 경험입니다.</p></div><dl class="facts"><div class="fact-row"><dt>작업 유형</dt><dd>졸업설계 모형 제작 및 시각화</dd></div><div class="fact-row"><dt>주요 문제</dt><dd>모형 제작비 증가</dd></div><div class="fact-row"><dt>대응 방법</dt><dd>콘타 소재 변경, 렌더링 보완</dd></div><div class="fact-row"><dt>주요 성과</dt><dd>제작비 90만 원 절감</dd></div><div class="fact-row"><dt>완료 조건</dt><dd>전시 일정에 맞춘 결과물 완성</dd></div></dl></div></div></section>
+      <section class="detail-section" style="background:var(--white)"><div class="shell"><div class="detail-section-heading"><span class="num">02 / CHALLENGE</span><div><h2>문제 상황</h2><p>제작 과정에서 나타난 문제를 명확히 정의하고 해결 목표를 세웠습니다.</p></div></div><div class="analysis-grid"><article class="diagram-card"><svg viewBox="0 0 420 245" role="img" aria-label="모형 제작비 증가 상황 개념 그래픽"><rect width="420" height="245" fill="#e8e4d9"/><g transform="translate(50 35)"><path d="M20 120 L155 70 L300 120 L165 172Z" fill="#f9f6ec" stroke="#899385" stroke-width="2"/><path d="M20 120 L165 172 L165 193 L20 141Z" fill="#c0cabc"/><path d="M165 172 L300 120 L300 141 L165 193Z" fill="#819181"/><path d="M45 112 L155 81 L270 119 L160 152Z" fill="#d3d9cd" stroke="#879584" stroke-width="1.5"/><path d="M78 104 L155 83 L230 108 L153 131Z" fill="#f8f4e9" stroke="#9da797" stroke-width="1.5"/></g><circle cx="342" cy="40" r="23" fill="#b84e32"/><path d="M342 28 V45 M342 51 V53" stroke="#fffaf0" stroke-width="3" stroke-linecap="round"/></svg><h3>모형 제작비 증가</h3><p>특히 재료 사용량이 많은 콘타 제작 부문에서 비용 부담이 발생했습니다.</p></article><article class="diagram-card"><svg viewBox="0 0 420 245" role="img" aria-label="해결 목표 개념 그래픽"><rect width="420" height="245" fill="#e2e7dd"/><g transform="translate(50 35)"><path d="M20 120 L155 70 L300 120 L165 172Z" fill="#f9f6ec" stroke="#7f9180" stroke-width="2"/><path d="M20 120 L165 172 L165 193 L20 141Z" fill="#aebead"/><path d="M165 172 L300 120 L300 141 L165 193Z" fill="#768d7c"/><g fill="#c5d5c7" stroke="#7f9180"><path d="M48 119 L113 95 L154 109 L90 133Z"/><path d="M112 143 L175 120 L214 133 L151 157Z"/><path d="M184 113 L235 94 L274 107 L222 126Z"/></g></g><path d="M315 35 L328 48 L353 20" fill="none" stroke="#b84e32" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>비용 효율과 완성도</h3><p>비용을 줄이면서도 최종 결과물의 표현과 전시 일정을 지키는 것을 목표로 했습니다.</p></article></div></div></section>
+      <section class="detail-section"><div class="shell"><div class="detail-section-heading"><span class="num">03 / SOLUTION</span><div><h2>해결 과정</h2><p>상황을 파악하고 소재를 조정한 뒤 결과물을 보완하는 단계별 과정입니다.</p></div></div><div class="timeline"><div class="timeline-row"><div class="year">STEP 01</div><div><h3>제작비 증가 원인 확인</h3><p>모형 제작 과정에서 재료 사용량이 큰 콘타 부분을 확인하고 대안을 검토했습니다.</p></div></div><div class="timeline-row"><div class="year">STEP 02</div><div><h3>콘타 제작 소재 변경</h3><p>재료를 변경해 제작비 부담을 줄였습니다. 실제 변경 전·후 소재와 선택 근거를 여기에 추가합니다.</p></div></div><div class="timeline-row"><div class="year">STEP 03</div><div><h3>렌더링 이미지 보완</h3><p>렌더링 이미지를 추가로 보완해 시각적 완성도를 높였습니다. 보정 전·후 이미지를 나란히 보여주는 것을 권장합니다.</p></div></div><div class="timeline-row"><div class="year">STEP 04</div><div><h3>전시 일정에 맞춰 완성</h3><p>비용과 결과물의 완성도를 함께 고려해 졸업작품을 일정 내에 마무리했습니다.</p></div></div></div></div></section>
+      <section class="detail-section" style="background:var(--white)"><div class="shell"><div class="detail-section-heading"><span class="num">04 / OUTCOME</span><div><h2>주요 성과</h2><p>문제 해결이 결과에 어떤 영향을 주었는지 보여줍니다.</p></div></div><div class="outcome-grid"><div class="outcome-number"><strong>₩900,000</strong><span>모형 제작비 절감</span></div><div class="outcome-copy"><h3>비용을 조정하고, 완성도를 보완하다.</h3><p>콘타 제작 소재 변경을 통해 모형 제작비를 90만 원 절감했습니다. 또한 렌더링 이미지를 보완해 결과물의 시각적 완성도를 높이고, 전시 일정에 맞춰 졸업작품을 완성했습니다.</p></div></div></div></section>
+      <section class="detail-section"><div class="shell"><div class="detail-section-heading"><span class="num">05 / FINAL</span><div><h2>최종 결과물</h2><p>실제 모형 사진과 렌더링 결과물로 교체할 영역입니다.</p></div></div><div class="gallery-main"><svg viewBox="0 0 1200 550" role="img" aria-label="졸업설계 최종 결과물 교체 영역"><rect width="1200" height="550" fill="#e4e1d7"/><path d="M0 390 L1200 260 V550 H0Z" fill="#c6ccbf"/><g transform="translate(210 60)"><path d="M40 245 L370 132 L780 250 L445 368Z" fill="#f8f4e9" stroke="#879284" stroke-width="2"/><path d="M40 245 L445 368 L445 403 L40 280Z" fill="#b6c2b2"/><path d="M445 368 L780 250 L780 285 L445 403Z" fill="#7a8c7c"/><g fill="#d0d8cc" stroke="#889587" stroke-width="1.5"><path d="M85 240 L220 194 L338 229 L203 276Z"/><path d="M235 285 L370 240 L475 271 L340 319Z"/><path d="M485 238 L611 193 L712 222 L585 268Z"/></g><g fill="#8d9c8e"><rect x="255" y="102" width="18" height="84"/><rect x="281" y="94" width="18" height="86"/><rect x="307" y="87" width="18" height="84"/><rect x="333" y="94" width="18" height="79"/></g></g><text x="54" y="510" font-size="15" fill="#4f5e50" letter-spacing="3">FINAL MODEL / IMAGE PLACEHOLDER</text></svg></div><div class="gallery-thumbs"><figure><svg viewBox="0 0 500 330" role="img" aria-label="모형 제작 과정 사진 교체 영역"><rect width="500" height="330" fill="#e8e4da"/><path d="M45 232 L240 158 L452 230 L253 300Z" fill="#f8f5ec" stroke="#90988a" stroke-width="2"/><path d="M45 232 L253 300 L253 319 L45 251Z" fill="#b8c3b5"/><path d="M253 300 L452 230 L452 249 L253 319Z" fill="#809081"/><g stroke="#b0b9aa" stroke-width="2"><path d="M80 220 L240 170 M113 233 L273 183 M147 246 L307 196 M180 258 L340 208"/></g></svg><figcaption>모형 제작 과정 · 이미지 교체</figcaption></figure><figure><svg viewBox="0 0 500 330" role="img" aria-label="렌더링 개선 비교 이미지 교체 영역"><rect width="500" height="330" fill="#d9dfd7"/><rect x="24" y="24" width="218" height="280" fill="#c4d0c5"/><rect x="258" y="24" width="218" height="280" fill="#b2c4b5"/><path d="M40 185 L130 145 L224 183 V265 H40Z" fill="#e9e6da" stroke="#819182" stroke-width="1.5"/><path d="M274 167 L368 126 L460 165 V265 H274Z" fill="#f8f4e8" stroke="#738775" stroke-width="1.5"/><path d="M130 145 L130 265 M368 126 L368 265" stroke="#829485" stroke-width="2"/></svg><figcaption>렌더링 보완 전·후 · 이미지 교체</figcaption></figure></div></div></section>
+      <div class="shell detail-nav"><div class="prev-next"><a class="text-link" href="#/portfolio/rural-school-infrastructure">← 이전 프로젝트</a><a class="text-link" href="#/portfolio">전체 작품</a></div><div class="btn-row"><a class="btn secondary" href="#/resume">이력서 확인</a><a class="btn" href="#/contact">연락하기 <span class="arrow">↗</span></a></div></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="page" id="page-about" data-page="about" aria-labelledby="about-title">
+      <div class="shell page-intro"><p class="eyebrow">Profile / Design approach</p><h1 id="about-title">About<span class="serif" style="color:var(--accent)">.</span></h1><div class="intro-row"><p>공간의 필요와 이용자, 대지 조건을 함께 바라보며<br>설계의 이유와 가능성을 탐색합니다.</p><span class="count">LEE SIHYUNG / ARCHITECTURE</span></div></div>
+      <div class="shell profile-hero"><div class="profile-art"><svg viewBox="0 0 400 400" role="img" aria-label="건축 도면의 선과 면을 표현한 프로필 그래픽"><rect width="400" height="400" fill="#d8e0d7"/><g stroke="#718579" stroke-width="1.2" fill="none" opacity=".8"><path d="M40 70 H360 V330 H40Z M70 95 H330 V305 H70Z M100 120 H300 V280 H100Z"/><path d="M40 200 H360 M200 70 V330 M70 95 L330 305 M330 95 L70 305"/><circle cx="200" cy="200" r="105"/><circle cx="200" cy="200" r="72" stroke-dasharray="4 5"/></g><g fill="#f8f5e9" stroke="#6d8174" stroke-width="1.5"><path d="M112 145 L205 112 L289 148 L196 181Z"/><path d="M112 145 L196 181 L196 273 L112 237Z" fill="#e9e9de"/><path d="M196 181 L289 148 L289 240 L196 273Z" fill="#9db1a2"/></g><path d="M130 154 L130 229 M150 162 L150 238 M170 170 L170 246 M215 175 L275 154 M215 197 L275 176 M215 219 L275 198 M215 241 L275 220" stroke="#fffdf4" stroke-width="2"/></svg></div><div class="profile-copy"><p class="eyebrow">01 / Profile</p><h2>이시형</h2><p class="role">건축설계 신입 지원</p><p class="muted" style="font-size:14px;max-width:520px">건축학 전공을 바탕으로 공간의 필요와 이용자, 대지 조건을 함께 고려하는 설계 관점을 길러 왔습니다. 기존 공간의 가능성을 지역의 요구와 연결하고, 설계 의도를 명확하게 전달하는 과정을 중요하게 생각합니다.</p><dl class="profile-facts"><dt>학력</dt><dd>세종대학교 건축학과 · 2025년 2월 졸업</dd><dt>거주 지역</dt><dd>인천광역시</dd><dt>이메일</dt><dd><a href="mailto:dktlqkf002@gmail.com">dktlqkf002@gmail.com</a></dd></dl><div class="btn-row"><a class="btn" href="#/resume">이력서 확인 <span class="arrow">↗</span></a><a class="btn secondary" href="#/contact">연락하기</a></div></div></div>
+      <section class="section" style="background:var(--white)"><div class="shell"><div class="philosophy-panel"><div><p class="eyebrow">02 / Design philosophy</p><h2>공간과 사람,<br>장소의 맥락을 함께 읽기.</h2></div><div><p>건축은 형태를 만드는 것뿐 아니라, 이용자의 필요와 장소가 가진 조건을 살펴 적절한 관계를 구성하는 일이라고 생각합니다.</p><p>농어촌 폐교 활용 프로젝트를 통해 기존 학교의 입지와 지역 주민의 접근성을 고려하고, 지역사회에 필요한 기능을 담는 공간으로 재구성하는 방향을 고민했습니다.</p><p>도면과 공간 모델링으로 설계를 검토하고, 그래픽 도구를 활용해 설계 의도를 전달하는 과정도 중요하게 생각합니다.</p></div></div></div></section>
+      <section class="section"><div class="shell"><div class="section-head"><div><p class="eyebrow">03 / Core competencies</p><h2>설계를 검토하고<br>의도를 시각화하는 도구.</h2></div><p>실제 활용 경험을 기준으로 소개하며, 프로그램 숙련도는 근거가 확인될 때 추가합니다.</p></div><div class="competency-grid"><article class="competency"><span class="mini">01 / Drafting & Spatial Review</span><h3>도면 및 공간 검토</h3><div class="chips"><span class="chip">AutoCAD</span><span class="chip">SketchUp</span></div><p class="muted" style="font-size:12px;margin:16px 0 0">도면을 검토하고 3D 공간 구성을 확인하는 데 활용했습니다.</p></article><article class="competency"><span class="mini">02 / Graphic & Visualization</span><h3>그래픽 및 시각화</h3><div class="chips"><span class="chip">Adobe Illustrator</span><span class="chip">Adobe Photoshop</span></div><p class="muted" style="font-size:12px;margin:16px 0 0">설계 자료와 이미지를 정리하고 설계 의도를 시각화했습니다.</p></article></div></div></section>
+      <section class="section compact" style="background:var(--paper-2)"><div class="shell"><div class="section-head"><div><p class="eyebrow">04 / Problem solving</p><h2>제약을 파악하고<br>실행 가능한 대안을 찾다.</h2></div><p>졸업설계 과정에서 실제 문제를 해결한 경험입니다.</p></div><div class="timeline"><div class="timeline-row"><div class="year">SITUATION</div><div><h3>모형 제작비 증가</h3><p>예상보다 제작비가 높아져 재료 사용과 제작 방식의 조정이 필요했습니다.</p></div></div><div class="timeline-row"><div class="year">ACTION</div><div><h3>콘타 제작 소재 변경</h3><p>재료 사용량이 큰 부분의 소재를 변경하고, 렌더링 이미지를 별도로 보완했습니다.</p></div></div><div class="timeline-row"><div class="year">OUTCOME</div><div><h3>제작비 90만 원 절감</h3><p>비용을 줄이는 동시에 결과물의 시각적 완성도를 높이고 전시 일정에 맞춰 작품을 완성했습니다.</p><p style="margin-top:12px"><a class="text-link" href="#/portfolio/graduation-model">프로젝트 상세 보기 <span class="arrow">↗</span></a></p></div></div></div></div></section>
+      <section class="contact-band"><div class="shell contact-band-inner"><div><p class="eyebrow">Next / Resume</p><h2>프로필과 프로젝트 경험을<br><span>더 자세히 확인하세요.</span></h2></div><div class="band-actions"><a class="btn light" href="#/resume">이력서 보기 <span class="arrow">↗</span></a><a class="btn secondary" href="#/contact">연락하기 <span class="arrow">↗</span></a></div></div></section>
+    </section>
+
+    <!-- RESUME -->
+    <section class="page" id="page-resume" data-page="resume" aria-labelledby="resume-title">
+      <div class="shell page-intro"><p class="eyebrow">Career / Experience / Skills</p><div class="resume-top"><div><h1 id="resume-title">Resume<span class="serif" style="color:var(--accent)">.</span></h1><div class="intro-row"><p>학력, 프로젝트 경험, 핵심 역량을 한눈에 확인할 수 있도록 정리했습니다.</p></div></div><button class="btn no-print" type="button" id="printResume">인쇄 / PDF 저장 <span class="arrow">↓</span></button></div></div>
+      <div class="shell section compact"><div class="resume-summary"><div><p class="eyebrow">Candidate profile</p><h2>이시형</h2><span class="role">건축설계 신입 지원</span></div><dl><dt>이메일</dt><dd><a href="mailto:dktlqkf002@gmail.com">dktlqkf002@gmail.com</a></dd><dt>연락처</dt><dd><a href="tel:010-2003-9757">010-2003-9757</a></dd><dt>거주 지역</dt><dd>인천광역시</dd><dt>학력</dt><dd>세종대학교 건축학과 졸업 · 2025년 2월</dd></dl></div></div>
+      <section class="section compact" style="padding-top:30px"><div class="shell"><div class="topline"><h2>01 / EDUCATION</h2><small>학력</small></div><div class="timeline"><div class="timeline-row"><div class="year">2025.02</div><div><h3>세종대학교 건축학과</h3><p>졸업</p></div></div></div></div></section>
+      <section class="section compact" style="background:var(--white)"><div class="shell"><div class="topline"><h2>02 / PROJECT EXPERIENCE</h2><small>주요 프로젝트</small></div><div class="resume-project"><div class="num">01</div><div><h3>농어촌 폐교 활용을 통한 지역 인프라 확충</h3><p>학령인구 감소와 고령화에 따른 지역 인프라 부족 문제를 바탕으로 폐교의 재활용 가능성을 검토했습니다. 기존 학교의 입지와 접근성을 고려해 지역사회에 필요한 기능을 담는 공간으로 재구성하는 방향을 구상했으며, 도면 및 공간 검토와 설계 의도 시각화에 참여했습니다.</p><div class="chips" style="margin-top:13px"><span class="chip">AutoCAD</span><span class="chip">SketchUp</span><span class="chip">Illustrator</span><span class="chip">Photoshop</span></div></div><a class="text-link" href="#/portfolio/rural-school-infrastructure">상세 보기 ↗</a></div><div class="resume-project"><div class="num">02</div><div><h3>졸업설계 모형 제작 및 결과물 보완</h3><p>모형 제작비가 증가하자 재료 사용량이 큰 콘타 부분의 소재를 변경해 제작비를 90만 원 절감했습니다. 렌더링 이미지를 보완해 시각적 완성도를 높이고, 전시 일정에 맞춰 졸업작품을 완성했습니다.</p><div class="chips" style="margin-top:13px"><span class="chip">문제 해결</span><span class="chip">비용 절감</span><span class="chip">시각화 개선</span></div></div><a class="text-link" href="#/portfolio/graduation-model">상세 보기 ↗</a></div></div></section>
+      <section class="section compact"><div class="shell"><div class="topline"><h2>03 / TECHNICAL SKILLS</h2><small>핵심 역량</small></div><div class="resume-skill-row"><strong>도면 및 공간 검토</strong><div class="chips"><span class="chip">AutoCAD</span><span class="chip">SketchUp</span></div></div><div class="resume-skill-row"><strong>그래픽 및 시각화</strong><div class="chips"><span class="chip">Adobe Illustrator</span><span class="chip">Adobe Photoshop</span></div></div></div></section>
+      <section class="contact-band"><div class="shell contact-band-inner"><div><p class="eyebrow">Get in touch</p><h2>추가 자료나 면담이 필요하시면<br><span>편하게 연락해 주세요.</span></h2></div><div class="band-actions"><button class="btn light" type="button" id="printResumeBottom">인쇄 / PDF 저장 <span class="arrow">↓</span></button><a class="btn secondary" href="#/contact">연락하기 <span class="arrow">↗</span></a></div></div></section>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="page" id="page-contact" data-page="contact" aria-labelledby="contact-title">
+      <div class="shell page-intro"><p class="eyebrow">Contact / Let's connect</p><h1 id="contact-title">Contact<span class="serif" style="color:var(--accent)">.</span></h1><div class="intro-row"><p>포트폴리오를 확인해 주셔서 감사합니다.<br>채용 관련 문의나 추가 자료 요청은 아래 연락처로 부탁드립니다.</p><span class="count">LEE SIHYUNG / ARCHITECTURE</span></div></div>
+      <div class="shell contact-layout"><div class="contact-copy"><p class="eyebrow">01 / Contact information</p><h2>새로운 기회와<br>대화를 기다립니다.</h2><p>이메일 또는 전화로 연락하실 수 있습니다. 아래 문의 양식은 메일 앱에서 작성 초안을 여는 방식이며, 서버에 문의 내용을 저장하지 않습니다.</p><div class="contact-detail"><span class="label">Email</span><a href="mailto:dktlqkf002@gmail.com">dktlqkf002@gmail.com ↗</a></div><div class="contact-detail"><span class="label">Phone</span><a href="tel:010-2003-9757">010-2003-9757 ↗</a></div><div class="contact-detail"><span class="label">Location</span><span>Incheon, Republic of Korea</span></div><div style="margin-top:25px"><a class="text-link" href="#/portfolio">포트폴리오 다시 보기 <span class="arrow">↗</span></a></div></div>
+        <form class="contact-form" id="contactForm"><p class="eyebrow">02 / Message</p><h3>메일 작성하기</h3><p>내용을 입력하면 기본 이메일 앱에서 메일 초안이 열립니다.</p><label class="field"><span>이름 / 소속</span><input name="sender" type="text" autocomplete="name" placeholder="이름 또는 회사명" required></label><label class="field"><span>회신 이메일</span><input name="reply" type="email" autocomplete="email" placeholder="name@company.com" required></label><label class="field"><span>문의 제목</span><input name="subject" type="text" placeholder="채용 관련 문의" required></label><label class="field"><span>문의 내용</span><textarea name="message" placeholder="문의 내용을 입력해 주세요." required></textarea></label><button class="btn" type="submit">이메일 초안 열기 <span class="arrow">↗</span></button><p class="form-note">이 폼은 메일 발송 서버를 포함하지 않습니다. 발송 전 이메일 앱에서 내용을 확인해 주세요.</p><div class="inline-notice" id="contactNotice" hidden role="status"></div></form>
+      </div>
+      <section class="contact-band"><div class="shell contact-band-inner"><div><p class="eyebrow">Explore more</p><h2>작품과 설계 과정을<br><span>다시 살펴보세요.</span></h2></div><div class="band-actions"><a class="btn light" href="#/portfolio">작품 둘러보기 <span class="arrow">↗</span></a><a class="btn secondary" href="#/resume">이력서 확인 <span class="arrow">↗</span></a></div></div></section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <a class="footer-name" href="#/">이시형 · ARCHITECTURE</a>
+      <div class="footer-meta"><a href="#/portfolio">Portfolio</a><a href="#/about">About</a><a href="#/resume">Resume</a><a href="#/contact">Contact</a><a href="mailto:dktlqkf002@gmail.com">dktlqkf002@gmail.com</a><span>© <span id="year">2026</span> Lee Sihyung</span></div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+      const projects = [
+        {
+          id: 'rural-school-infrastructure',
+          route: '/portfolio/rural-school-infrastructure',
+          page: 'project-rural',
+          number: '01',
+          category: 'Architectural Design',
+          title: '농어촌 폐교 활용을 통한 지역 인프라 확충',
+          short: '지역 인프라 부족 문제를 기존 학교의 입지와 공간적 가능성으로 풀어낸 건축 프로젝트.',
+          art: 'rural'
+        },
+        {
+          id: 'graduation-model',
+          route: '/portfolio/graduation-model',
+          page: 'project-graduation',
+          number: '02',
+          category: 'Process & Problem Solving',
+          title: '졸업설계 모형 제작 및 결과물 보완',
+          short: '콘타 제작 소재 변경으로 제작비 90만 원을 절감하고 렌더링을 보완한 작업.',
+          art: 'model'
+        }
+      ];
+
+      // Inline SVG illustrations are placeholders. Replace them with the applicant's actual project images when ready.
+      function projectArt(type, unique = 'card') {
+        if (type === 'model') {
+          return `<svg viewBox="0 0 720 500" role="img" aria-label="졸업설계 모형을 표현한 그래픽" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${unique}bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8e2d6"/><stop offset="1" stop-color="#bac5b8"/></linearGradient></defs><rect width="720" height="500" fill="url(#${unique}bg)"/><path d="M0 360 L720 245 V500 H0Z" fill="#c1cabe"/><g transform="translate(85 40)"><path d="M10 245 L255 145 L560 242 L310 340Z" fill="#f7f3e9" stroke="#849282" stroke-width="2"/><path d="M10 245 L310 340 L310 365 L10 270Z" fill="#b2c0b0"/><path d="M310 340 L560 242 L560 267 L310 365Z" fill="#7a8e7c"/><path d="M55 235 L200 180 L275 205 L130 260Z M260 284 L388 235 L450 255 L322 304Z M370 223 L470 183 L525 203 L425 243Z" fill="#cbd7ca" stroke="#879686" stroke-width="1.5"/><g fill="#87998a"><rect x="255" y="95" width="17" height="80"/><rect x="278" y="87" width="17" height="82"/><rect x="301" y="80" width="17" height="80"/><rect x="324" y="87" width="17" height="74"/></g></g><g stroke="#f9f7ed" stroke-width="2" opacity=".8"><path d="M35 55 H150 M35 68 H115 M570 58 H685"/></g></svg>`;
+        }
+        return `<svg viewBox="0 0 720 500" role="img" aria-label="건축 매스와 입면을 표현한 그래픽" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${unique}bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce4dc"/><stop offset="1" stop-color="#9fb3a6"/></linearGradient></defs><rect width="720" height="500" fill="url(#${unique}bg)"/><path d="M0 360 L220 285 L430 350 L720 255 V500 H0Z" fill="#b6c5b7"/><g transform="translate(85 58)"><path d="M15 115 L260 35 L505 120 L260 205Z" fill="#faf6eb" stroke="#718576" stroke-width="2"/><path d="M15 115 L260 205 L260 365 L15 275Z" fill="#e2e5d9" stroke="#718576" stroke-width="2"/><path d="M260 205 L505 120 L505 280 L260 365Z" fill="#728a7d" stroke="#53695a" stroke-width="2"/><path d="M45 127 L120 154 L120 313 L45 286Z M140 161 L215 188 L215 347 L140 320Z" fill="#b6c9bd" stroke="#829789" stroke-width="1.5"/><path d="M65 134 L65 293 M85 141 L85 300 M160 168 L160 327 M180 175 L180 334" stroke="#f8f5eb" stroke-width="3"/><path d="M288 196 L478 130 M288 234 L478 168 M288 272 L478 206 M288 310 L478 244 M288 348 L478 282" stroke="#d5ded5" stroke-width="2.5"/><path d="M15 115 L260 35 L505 120" fill="none" stroke="#fffdf3" stroke-width="4"/></g></svg>`;
+      }
+
+      function projectCard(project, prefix = 'card') {
+        const href = `#${project.route}`;
+        return `<article class="project-card"><a class="project-image" href="${href}" aria-label="${project.title} 상세 보기">${projectArt(project.art, `${prefix}-${project.number}`)}<span class="project-tag">${project.category}</span></a><div class="project-card-body"><div><p class="project-index">PROJECT ${project.number}</p><h3><a href="${href}">${project.title}</a></h3><p>${project.short}</p></div><a class="round-link" href="${href}" aria-label="${project.title} 상세 보기"><span class="arrow">↗</span></a></div></article>`;
+      }
+
+      document.getElementById('homeProjectGrid').innerHTML = projects.map(p => projectCard(p, 'home')).join('');
+      document.getElementById('portfolioProjectGrid').innerHTML = projects.map(p => projectCard(p, 'portfolio')).join('');
+      document.getElementById('projectCount').textContent = String(projects.length).padStart(2, '0');
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const routeMap = {
+        '/': 'home',
+        '/portfolio': 'portfolio',
+        '/about': 'about',
+        '/resume': 'resume',
+        '/contact': 'contact',
+        '/portfolio/rural-school-infrastructure': 'project-rural',
+        '/portfolio/graduation-model': 'project-graduation'
+      };
+      const nav = document.getElementById('mainNav');
+      const menuToggle = document.getElementById('menuToggle');
+
+      function currentRoute() {
+        let route = decodeURIComponent(location.hash.replace(/^#/, '') || '/');
+        if (!route.startsWith('/')) route = '/' + route;
+        return routeMap[route] ? route : '/';
+      }
+      function closeMenu() {
+        nav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', '메뉴 열기');
+        document.body.classList.remove('menu-open');
+      }
+      function render() {
+        const route = currentRoute();
+        const pageId = routeMap[route];
+        document.querySelectorAll('.page').forEach(page => {
+          const active = page.dataset.page === pageId;
+          page.classList.toggle('active', active);
+          page.setAttribute('aria-hidden', String(!active));
+        });
+        document.querySelectorAll('[data-nav]').forEach(link => {
+          const active = link.dataset.nav === pageId || (pageId.startsWith('project-') && link.dataset.nav === 'portfolio');
+          if (active) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        });
+        closeMenu();
+        window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        const titles = {
+          home: '이시형 — Architecture Portfolio',
+          portfolio: 'Portfolio — 이시형',
+          'project-rural': '농어촌 폐교 활용 프로젝트 — 이시형',
+          'project-graduation': '졸업설계 모형 및 결과물 보완 — 이시형',
+          about: 'About — 이시형', resume: 'Resume — 이시형', contact: 'Contact — 이시형'
+        };
+        document.title = titles[pageId] || titles.home;
+      }
+      window.addEventListener('hashchange', render);
+      menuToggle.addEventListener('click', () => {
+        const open = menuToggle.getAttribute('aria-expanded') !== 'true';
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('open', open);
+        document.body.classList.toggle('menu-open', open);
+      });
+      nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+      render();
+
+      function printResume() {
+        // The resume page can be printed or saved as PDF through the browser print dialog.
+        if (currentRoute() !== '/resume') {
+          location.hash = '#/resume';
+          setTimeout(() => window.print(), 220);
+        } else {
+          window.print();
+        }
+      }
+      document.getElementById('printResume').addEventListener('click', printResume);
+      document.getElementById('printResumeBottom').addEventListener('click', printResume);
+
+      const contactForm = document.getElementById('contactForm');
+      const contactNotice = document.getElementById('contactNotice');
+      contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!contactForm.reportValidity()) return;
+        const data = new FormData(contactForm);
+        const sender = String(data.get('sender') || '').trim();
+        const reply = String(data.get('reply') || '').trim();
+        const subject = String(data.get('subject') || '채용 관련 문의').trim();
+        const message = String(data.get('message') || '').trim();
+        const body = `보내는 사람: ${sender}\n회신 이메일: ${reply}\n\n${message}`;
+        const mailto = `mailto:dktlqkf002@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        contactNotice.hidden = false;
+        contactNotice.textContent = '기본 이메일 앱에서 메일 초안을 열도록 요청합니다. 앱이 열리지 않으면 이메일 주소를 직접 복사해 사용해 주세요.';
+        window.location.href = mailto;
+      });
+    })();
+  </script>
+</body>
+</html>
